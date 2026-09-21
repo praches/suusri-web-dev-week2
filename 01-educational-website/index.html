@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Meridian Institute — Learn With Purpose</title>
+<meta name="description" content="Meridian Institute — programs, faculty, and admissions.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600;8..60,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<style>
+  :root{
+    --navy:#0B1D3A;
+    --navy-2:#122A50;
+    --teal:#0F8B8D;
+    --teal-light:#14B8A6;
+    --paper:#F7F9FB;
+    --ink:#10202E;
+    --slate:#5B7083;
+    --line:#D9E2E8;
+    --serif:'Source Serif 4', Georgia, serif;
+    --sans:'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --maxw:1180px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth; scroll-padding-top:88px;}
+  body{
+    margin:0; font-family:var(--sans); color:var(--ink); background:var(--paper);
+    -webkit-font-smoothing:antialiased;
+  }
+  img,svg{max-width:100%; display:block;}
+  a{color:inherit;}
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 28px;}
+  .eyebrow-plain{font-size:.9rem; color:var(--teal); font-weight:600; letter-spacing:.01em;}
+  h1,h2,h3,h4{font-family:var(--serif); font-weight:600; margin:0; line-height:1.1;}
+  p{line-height:1.65; color:var(--slate); margin:0;}
+  .btn{
+    display:inline-flex; align-items:center; gap:10px; font-family:var(--sans); font-weight:600;
+    padding:14px 26px; border-radius:3px; border:1px solid transparent; cursor:pointer;
+    font-size:.98rem; transition:transform .25s ease, box-shadow .25s ease, background .25s ease;
+    text-decoration:none;
+  }
+  .btn-primary{background:var(--teal); color:#fff;}
+  .btn-primary:hover{background:var(--teal-light); box-shadow:0 8px 20px -8px rgba(15,139,141,.6);}
+  .btn-ghost{background:transparent; color:var(--paper); border-color:rgba(247,249,251,.35);}
+  .btn-ghost:hover{border-color:#fff; background:rgba(255,255,255,.08);}
+  .btn-dark{background:var(--navy); color:#fff;}
+  .btn-dark:hover{background:var(--navy-2);}
+  section{padding:104px 0;}
+  .section-head{max-width:640px; margin-bottom:56px;}
+  .section-head h2{font-size:clamp(1.9rem, 3vw, 2.6rem); margin-top:10px;}
+  .section-head p{margin-top:16px; font-size:1.05rem;}
+  .rule{height:1px; background:var(--line); border:0;}
+
+  /* ---------- Header ---------- */
+  header{
+    position:sticky; top:0; z-index:500; background:rgba(11,29,58,.94);
+    backdrop-filter:blur(10px); border-bottom:1px solid rgba(255,255,255,.08);
+  }
+  .nav{display:flex; align-items:center; justify-content:space-between; height:78px;}
+  .brand{display:flex; align-items:center; gap:10px; font-family:var(--serif); color:#fff; font-size:1.25rem; font-weight:600; text-decoration:none;}
+  .brand .mark{width:34px; height:34px; border-radius:2px; background:var(--teal); display:flex; align-items:center; justify-content:center; color:#fff; font-family:var(--serif); font-size:1.1rem;}
+  .nav-links{display:flex; gap:34px; list-style:none; margin:0; padding:0;}
+  .nav-links a{color:rgba(247,249,251,.82); text-decoration:none; font-size:.95rem; font-weight:500; position:relative; padding:6px 0;}
+  .nav-links a::after{content:'';position:absolute; left:0; bottom:0; width:0; height:1px; background:var(--teal-light); transition:width .25s ease;}
+  .nav-links a:hover{color:#fff;}
+  .nav-links a:hover::after{width:100%;}
+  .nav-actions{display:flex; align-items:center; gap:16px;}
+  .hamburger{display:none; flex-direction:column; gap:5px; background:none; border:0; cursor:pointer; padding:8px;}
+  .hamburger span{width:24px; height:2px; background:#fff; display:block; transition:all .3s ease;}
+  .drawer{
+    position:fixed; inset:0 0 0 auto; width:min(320px,84vw); background:var(--navy); z-index:600;
+    transform:translateX(100%); transition:transform .35s ease; padding:28px 26px; display:flex; flex-direction:column; gap:6px;
+    box-shadow:-10px 0 40px rgba(0,0,0,.3);
+  }
+  .drawer.open{transform:translateX(0);}
+  .drawer a{color:#fff; text-decoration:none; padding:14px 4px; border-bottom:1px solid rgba(255,255,255,.08); font-size:1.05rem;}
+  .drawer-close{align-self:flex-end; background:none; border:0; color:#fff; font-size:1.6rem; cursor:pointer; margin-bottom:10px;}
+  .scrim{position:fixed; inset:0; background:rgba(0,0,0,.5); z-index:590; opacity:0; pointer-events:none; transition:opacity .3s ease;}
+  .scrim.show{opacity:1; pointer-events:auto;}
+
+  /* ---------- Hero ---------- */
+  .hero{
+    background:linear-gradient(180deg, var(--navy) 0%, var(--navy-2) 100%); color:#fff;
+    padding:100px 0 90px; position:relative; overflow:hidden;
+  }
+  .hero::after{
+    content:''; position:absolute; right:-10%; top:-20%; width:600px; height:600px; border-radius:50%;
+    background:radial-gradient(circle, rgba(15,139,141,.28) 0%, rgba(15,139,141,0) 70%);
+  }
+  .hero-grid{display:grid; grid-template-columns:1.15fr .85fr; gap:60px; align-items:end; position:relative; z-index:2;}
+  .hero-kicker{font-size:.92rem; color:var(--teal-light); font-weight:600; margin-bottom:18px;}
+  .hero h1{font-size:clamp(2.4rem, 5vw, 3.6rem); color:#fff; letter-spacing:-.01em;}
+  .hero h1 .accent{color:var(--teal-light);}
+  .hero p.lead{color:rgba(247,249,251,.78); font-size:1.15rem; margin-top:22px; max-width:520px;}
+  .hero-ctas{display:flex; gap:16px; margin-top:36px; flex-wrap:wrap;}
+  .hero-side{border-left:1px solid rgba(255,255,255,.18); padding-left:36px;}
+  .hero-side p{color:rgba(247,249,251,.65); font-size:.98rem;}
+  .stat-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:rgba(255,255,255,.14); margin-top:70px; border-radius:4px; overflow:hidden;}
+  .stat{background:rgba(255,255,255,.04); padding:28px 22px;}
+  .stat .num{font-family:var(--serif); font-size:2.1rem; color:var(--teal-light);}
+  .stat .label{color:rgba(247,249,251,.68); font-size:.88rem; margin-top:6px;}
+
+  /* ---------- About ---------- */
+  .about-grid{display:grid; grid-template-columns:.9fr 1.1fr; gap:70px; align-items:start;}
+  .about-media{background:var(--navy); border-radius:4px; aspect-ratio:4/5; position:relative; overflow:hidden;}
+  .about-media svg{position:absolute; inset:0; width:100%; height:100%;}
+  .about-copy p{font-size:1.06rem; margin-bottom:18px;}
+  .about-list{list-style:none; margin:28px 0 0; padding:0; display:grid; gap:16px;}
+  .about-list li{display:flex; gap:14px; align-items:flex-start; font-size:.98rem; color:var(--ink);}
+  .about-list .dot{width:8px; height:8px; border-radius:50%; background:var(--teal); margin-top:7px; flex-shrink:0;}
+
+  /* ---------- Courses ---------- */
+  .courses{background:#fff;}
+  .filter-bar{display:flex; gap:10px; flex-wrap:wrap; margin-bottom:40px; border-bottom:1px solid var(--line); padding-bottom:0;}
+  .filter-tab{
+    background:none; border:0; font-family:var(--sans); font-weight:600; font-size:.95rem; color:var(--slate);
+    padding:12px 4px; margin-right:26px; cursor:pointer; position:relative; top:1px; border-bottom:2px solid transparent;
+    transition:color .2s ease, border-color .2s ease;
+  }
+  .filter-tab.active, .filter-tab:hover{color:var(--navy); border-color:var(--teal);}
+  .course-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:26px;}
+  .course-card{
+    border:1px solid var(--line); border-radius:4px; padding:30px 26px; background:var(--paper);
+    transition:transform .3s ease, box-shadow .3s ease, border-color .3s ease; cursor:default;
+  }
+  .course-card:hover{transform:translateY(-6px); box-shadow:0 18px 40px -20px rgba(11,29,58,.25); border-color:var(--teal);}
+  .course-code{font-size:.82rem; color:var(--teal); font-weight:600; letter-spacing:.02em;}
+  .course-card h3{font-size:1.3rem; margin-top:10px;}
+  .course-card p{margin-top:12px; font-size:.95rem;}
+  .course-meta{display:flex; gap:16px; margin-top:20px; padding-top:18px; border-top:1px solid var(--line); font-size:.85rem; color:var(--slate);}
+  .course-card[data-cat]{display:none;}
+  .course-card.show{display:block;}
+
+  /* ---------- Why choose us ---------- */
+  .why{background:var(--navy); color:#fff;}
+  .why .section-head p{color:rgba(247,249,251,.7);}
+  .why .section-head h2{color:#fff;}
+  .why-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:rgba(255,255,255,.12); border-radius:4px; overflow:hidden;}
+  .why-item{background:var(--navy-2); padding:34px 26px;}
+  .why-item .n{font-family:var(--serif); font-size:1.4rem; color:var(--teal-light); margin-bottom:16px; display:block;}
+  .why-item h3{color:#fff; font-size:1.15rem;}
+  .why-item p{color:rgba(247,249,251,.65); margin-top:10px; font-size:.92rem;}
+
+  /* ---------- Faculty ---------- */
+  .faculty-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:26px;}
+  .faculty-card{text-align:left;}
+  .faculty-photo{aspect-ratio:1; background:var(--navy); border-radius:4px; margin-bottom:16px; position:relative; overflow:hidden;}
+  .faculty-photo svg{position:absolute; inset:0;}
+  .faculty-card h3{font-size:1.05rem;}
+  .faculty-card .role{color:var(--teal); font-size:.85rem; font-weight:600; margin-top:4px;}
+  .faculty-card p{font-size:.88rem; margin-top:10px;}
+
+  /* ---------- Achievements ---------- */
+  .achieve{background:#fff;}
+  .achieve-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:40px; text-align:left; border-top:1px solid var(--line); padding-top:50px;}
+  .achieve-item .counter{font-family:var(--serif); font-size:3rem; color:var(--navy); display:flex; align-items:baseline; gap:3px;}
+  .achieve-item .counter .suffix{font-size:1.6rem; color:var(--teal);}
+  .achieve-item .label{color:var(--slate); font-size:.95rem; margin-top:8px;}
+
+  /* ---------- Testimonials ---------- */
+  .testimonials{background:var(--paper);}
+  .testi-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:26px;}
+  .testi-card{background:#fff; border:1px solid var(--line); border-radius:4px; padding:32px 28px;}
+  .testi-quote{font-family:var(--serif); font-size:1.12rem; color:var(--ink); line-height:1.55;}
+  .testi-who{display:flex; align-items:center; gap:12px; margin-top:22px;}
+  .testi-avatar{width:42px; height:42px; border-radius:50%; background:var(--teal); flex-shrink:0;}
+  .testi-name{font-weight:600; font-size:.92rem; color:var(--ink);}
+  .testi-role{font-size:.82rem; color:var(--slate);}
+
+  /* ---------- Events ---------- */
+  .events{background:#fff;}
+  .event-row{display:grid; grid-template-columns:120px 1fr auto; gap:28px; align-items:center; padding:26px 0; border-bottom:1px solid var(--line);}
+  .event-row:first-of-type{border-top:1px solid var(--line);}
+  .event-date{background:var(--navy); color:#fff; border-radius:4px; padding:14px 10px; text-align:center;}
+  .event-date .d{font-family:var(--serif); font-size:1.6rem; display:block;}
+  .event-date .m{font-size:.78rem; color:var(--teal-light); letter-spacing:.03em;}
+  .event-info h3{font-size:1.1rem;}
+  .event-info p{font-size:.9rem; margin-top:6px;}
+  .event-tag{font-size:.82rem; font-weight:600; color:var(--teal); white-space:nowrap; border:1px solid var(--teal); padding:8px 16px; border-radius:20px;}
+
+  /* ---------- FAQ ---------- */
+  .faq{background:var(--paper);}
+  .faq-item{border-bottom:1px solid var(--line);}
+  .faq-q{
+    width:100%; text-align:left; background:none; border:0; padding:22px 0; display:flex; justify-content:space-between;
+    align-items:center; cursor:pointer; font-family:var(--serif); font-size:1.08rem; color:var(--ink); gap:20px;
+  }
+  .faq-q .plus{font-size:1.4rem; color:var(--teal); transition:transform .3s ease; flex-shrink:0;}
+  .faq-item.open .plus{transform:rotate(45deg);}
+  .faq-a{max-height:0; overflow:hidden; transition:max-height .35s ease;}
+  .faq-a p{padding:0 0 22px; font-size:.98rem; max-width:640px;}
+
+  /* ---------- Admission form ---------- */
+  .admission{background:var(--navy); color:#fff;}
+  .admission .section-head h2{color:#fff;}
+  .admission .section-head p{color:rgba(247,249,251,.7);}
+  .form-card{background:var(--navy-2); border-radius:6px; padding:44px; border:1px solid rgba(255,255,255,.1);}
+  .form-grid{display:grid; grid-template-columns:1fr 1fr; gap:22px;}
+  .field{display:flex; flex-direction:column; gap:8px; margin-bottom:22px;}
+  .field.full{grid-column:1/-1;}
+  .field label{font-size:.88rem; color:rgba(247,249,251,.78); font-weight:500;}
+  .field input, .field select, .field textarea{
+    background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.2); border-radius:3px; padding:13px 14px;
+    color:#fff; font-family:var(--sans); font-size:.95rem; outline:none; transition:border-color .2s ease;
+  }
+  .field input::placeholder, .field textarea::placeholder{color:rgba(247,249,251,.4);}
+  .field input:focus, .field select:focus, .field textarea:focus{border-color:var(--teal-light);}
+  .field .err{color:#FF9B9B; font-size:.82rem; min-height:16px;}
+  .field.invalid input, .field.invalid select, .field.invalid textarea{border-color:#FF6B6B;}
+  .form-note{font-size:.85rem; color:rgba(247,249,251,.55); margin-top:16px;}
+  .form-success{display:none; text-align:center; padding:50px 20px;}
+  .form-success.show{display:block;}
+  .form-success h3{color:#fff; font-size:1.4rem;}
+  .form-success p{margin-top:10px; color:rgba(247,249,251,.7);}
+
+  /* ---------- Footer ---------- */
+  footer{background:#081226; color:rgba(247,249,251,.7); padding:70px 0 30px;}
+  .foot-grid{display:grid; grid-template-columns:1.4fr 1fr 1fr 1fr; gap:40px; padding-bottom:50px; border-bottom:1px solid rgba(255,255,255,.08);}
+  .foot-brand .brand{color:#fff; margin-bottom:14px;}
+  .foot-brand p{font-size:.92rem; max-width:280px;}
+  footer h4{color:#fff; font-family:var(--sans); font-size:.9rem; font-weight:600; margin-bottom:18px;}
+  footer ul{list-style:none; margin:0; padding:0; display:grid; gap:12px;}
+  footer a{text-decoration:none; font-size:.92rem; color:rgba(247,249,251,.65);}
+  footer a:hover{color:var(--teal-light);}
+  .foot-bottom{display:flex; justify-content:space-between; align-items:center; padding-top:26px; font-size:.85rem; flex-wrap:wrap; gap:12px;}
+
+  /* ---------- Back to top ---------- */
+  .back-top{
+    position:fixed; bottom:28px; right:28px; width:48px; height:48px; border-radius:50%; background:var(--teal);
+    color:#fff; border:0; display:flex; align-items:center; justify-content:center; cursor:pointer; z-index:400;
+    opacity:0; pointer-events:none; transform:translateY(12px); transition:all .3s ease; box-shadow:0 10px 26px -8px rgba(0,0,0,.4);
+  }
+  .back-top.show{opacity:1; pointer-events:auto; transform:translateY(0);}
+  .back-top:hover{background:var(--teal-light);}
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 980px){
+    .nav-links{display:none;}
+    .hamburger{display:flex;}
+    .hero-grid{grid-template-columns:1fr; gap:40px;}
+    .hero-side{border-left:0; padding-left:0; border-top:1px solid rgba(255,255,255,.18); padding-top:28px;}
+    .stat-grid{grid-template-columns:repeat(2,1fr);}
+    .about-grid{grid-template-columns:1fr;}
+    .course-grid{grid-template-columns:repeat(2,1fr);}
+    .why-grid{grid-template-columns:repeat(2,1fr);}
+    .faculty-grid{grid-template-columns:repeat(2,1fr);}
+    .achieve-grid{grid-template-columns:repeat(2,1fr); row-gap:36px;}
+    .testi-grid{grid-template-columns:1fr;}
+    .form-grid{grid-template-columns:1fr;}
+    .foot-grid{grid-template-columns:1fr 1fr;}
+  }
+  @media (max-width: 600px){
+    section{padding:72px 0;}
+    .wrap{padding:0 20px;}
+    .course-grid, .why-grid, .faculty-grid, .achieve-grid{grid-template-columns:1fr;}
+    .event-row{grid-template-columns:1fr; text-align:left;}
+    .event-date{width:70px;}
+    .form-card{padding:28px 22px;}
+    .foot-grid{grid-template-columns:1fr;}
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:.01ms !important; transition-duration:.01ms !important;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ================= HEADER ================= -->
+<header>
+  <div class="wrap nav">
+    <a href="#top" class="brand"><span class="mark">M</span> Meridian Institute</a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#programs">Programs</a></li>
+      <li><a href="#faculty">Faculty</a></li>
+      <li><a href="#events">Events</a></li>
+      <li><a href="#faq">FAQ</a></li>
+    </ul>
+    <div class="nav-actions">
+      <a href="#admission" class="btn btn-ghost" style="padding:10px 20px; font-size:.9rem;">Apply Now</a>
+      <button class="hamburger" id="hamburgerBtn" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="scrim" id="scrim"></div>
+<nav class="drawer" id="drawer">
+  <button class="drawer-close" id="drawerClose" aria-label="Close menu">&times;</button>
+  <a href="#about">About</a>
+  <a href="#programs">Programs</a>
+  <a href="#faculty">Faculty</a>
+  <a href="#events">Events</a>
+  <a href="#faq">FAQ</a>
+  <a href="#admission">Apply Now</a>
+</nav>
+
+<!-- ================= HERO ================= -->
+<section class="hero" id="top">
+  <div class="wrap hero-grid">
+    <div class="hero-main">
+      <div class="hero-kicker">ADMISSIONS OPEN — FALL COHORT 2027</div>
+      <h1>Study with rigor. <span class="accent">Graduate with purpose.</span></h1>
+      <p class="lead">Meridian Institute pairs a research-grade curriculum with mentorship from working practitioners, across technology, design and the sciences.</p>
+      <div class="hero-ctas">
+        <a href="#admission" class="btn btn-primary">Start Your Learning Journey</a>
+        <a href="#programs" class="btn btn-ghost">Browse Programs</a>
+      </div>
+    </div>
+    <div class="hero-side">
+      <p>Ranked among the top 40 teaching-focused institutes nationally, with a placement rate above 90% within six months of graduation.</p>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="stat-grid">
+      <div class="stat"><div class="num">18</div><div class="label">Degree Programs</div></div>
+      <div class="stat"><div class="num">6,200+</div><div class="label">Enrolled Students</div></div>
+      <div class="stat"><div class="num">340</div><div class="label">Faculty Members</div></div>
+      <div class="stat"><div class="num">92%</div><div class="label">Placement Rate</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ABOUT ================= -->
+<section id="about">
+  <div class="wrap about-grid">
+    <div class="about-media">
+      <svg viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice">
+        <rect width="400" height="500" fill="#0B1D3A"/>
+        <circle cx="320" cy="80" r="140" fill="#122A50"/>
+        <path d="M0 380 Q120 300 220 380 T400 340 V500 H0 Z" fill="#0F8B8D" opacity="0.5"/>
+        <path d="M0 420 Q140 360 260 430 T400 400 V500 H0 Z" fill="#14B8A6" opacity="0.35"/>
+        <g stroke="#F7F9FB" stroke-opacity="0.25" stroke-width="1">
+          <line x1="20" y1="40" x2="20" y2="460"/>
+          <line x1="380" y1="40" x2="380" y2="460"/>
+        </g>
+      </svg>
+    </div>
+    <div class="about-copy">
+      <div class="eyebrow-plain">About Meridian</div>
+      <h2 style="margin-top:10px; font-size:clamp(1.9rem,3vw,2.5rem);">A teaching institute built around close mentorship</h2>
+      <p>Founded in 1994, Meridian Institute grew from a single evening-college campus into a full university offering undergraduate, graduate and continuing-education programs. Our defining choice, then and now, is class size: no lecture hall seats more than sixty students.</p>
+      <p>That constraint shapes everything else — faculty who know your name, project work reviewed line by line, and career guidance that starts in your first term rather than your last.</p>
+      <ul class="about-list">
+        <li><span class="dot"></span>Small cohort sizes across every program, undergraduate through doctoral</li>
+        <li><span class="dot"></span>Industry-embedded capstone projects with partner organizations</li>
+        <li><span class="dot"></span>Need-based and merit scholarships covering up to 100% of tuition</li>
+        <li><span class="dot"></span>On-campus research labs open to undergraduates from year one</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PROGRAMS ================= -->
+<section id="programs" class="courses">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow-plain">Programs</div>
+      <h2>Find the right course of study</h2>
+      <p>Eighteen programs across four schools, each combining foundational theory with studio and lab work.</p>
+    </div>
+    <div class="filter-bar" id="filterBar">
+      <button class="filter-tab active" data-filter="all">All Programs</button>
+      <button class="filter-tab" data-filter="tech">Technology</button>
+      <button class="filter-tab" data-filter="business">Business</button>
+      <button class="filter-tab" data-filter="design">Design</button>
+      <button class="filter-tab" data-filter="science">Sciences</button>
+    </div>
+    <div class="course-grid" id="courseGrid">
+      <div class="course-card" data-cat="tech">
+        <div class="course-code">CS · B.SC.</div>
+        <h3>Computer Science</h3>
+        <p>Algorithms, systems and applied machine learning, with a required industry practicum.</p>
+        <div class="course-meta"><span>4 years</span><span>Full-time</span></div>
+      </div>
+      <div class="course-card" data-cat="business">
+        <div class="course-code">MBA · M.B.A.</div>
+        <h3>Business Administration</h3>
+        <p>A general-management degree built around live consulting projects with regional firms.</p>
+        <div class="course-meta"><span>2 years</span><span>Full-time</span></div>
+      </div>
+      <div class="course-card" data-cat="design">
+        <div class="course-code">UXD · B.DES.</div>
+        <h3>User Experience Design</h3>
+        <p>Studio-based design education covering research methods, prototyping and visual systems.</p>
+        <div class="course-meta"><span>4 years</span><span>Full-time</span></div>
+      </div>
+      <div class="course-card" data-cat="science">
+        <div class="course-code">BIO · B.SC.</div>
+        <h3>Molecular Biology</h3>
+        <p>Wet-lab intensive coursework with undergraduate research placements starting sophomore year.</p>
+        <div class="course-meta"><span>4 years</span><span>Full-time</span></div>
+      </div>
+      <div class="course-card" data-cat="tech">
+        <div class="course-code">DS · M.SC.</div>
+        <h3>Data Science</h3>
+        <p>Statistics, distributed computing and a capstone with an industry-sponsored dataset.</p>
+        <div class="course-meta"><span>18 months</span><span>Full-time</span></div>
+      </div>
+      <div class="course-card" data-cat="business">
+        <div class="course-code">FIN · B.COM.</div>
+        <h3>Finance &amp; Accounting</h3>
+        <p>Corporate finance, audit and markets, with Bloomberg terminal access from year two.</p>
+        <div class="course-meta"><span>3 years</span><span>Full-time</span></div>
+      </div>
+      <div class="course-card" data-cat="design">
+        <div class="course-code">ARC · B.ARCH.</div>
+        <h3>Architecture</h3>
+        <p>Design studio paired with structural engineering and sustainable building practice.</p>
+        <div class="course-meta"><span>5 years</span><span>Full-time</span></div>
+      </div>
+      <div class="course-card" data-cat="science">
+        <div class="course-code">ENV · M.SC.</div>
+        <h3>Environmental Science</h3>
+        <p>Fieldwork-heavy program addressing climate policy, ecology and resource management.</p>
+        <div class="course-meta"><span>2 years</span><span>Full-time</span></div>
+      </div>
+      <div class="course-card" data-cat="tech">
+        <div class="course-code">SEC · B.SC.</div>
+        <h3>Cybersecurity</h3>
+        <p>Offensive and defensive security training, with a campus SOC students help operate.</p>
+        <div class="course-meta"><span>4 years</span><span>Full-time</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= WHY CHOOSE US ================= -->
+<section class="why">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow-plain" style="color:var(--teal-light);">Why Meridian</div>
+      <h2>Four commitments that shape how we teach</h2>
+    </div>
+    <div class="why-grid">
+      <div class="why-item">
+        <span class="n">01</span>
+        <h3>Small class sizes</h3>
+        <p>No lecture exceeds sixty students; most seminars run closer to fifteen.</p>
+      </div>
+      <div class="why-item">
+        <span class="n">02</span>
+        <h3>Practitioner faculty</h3>
+        <p>Over half our instructors work actively in industry alongside teaching.</p>
+      </div>
+      <div class="why-item">
+        <span class="n">03</span>
+        <h3>Funded research</h3>
+        <p>Undergraduate research stipends across all four schools, not just STEM.</p>
+      </div>
+      <div class="why-item">
+        <span class="n">04</span>
+        <h3>Career runway</h3>
+        <p>A dedicated placement office engages every student from their first term.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FACULTY ================= -->
+<section id="faculty">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow-plain">Faculty</div>
+      <h2>Learn from people still doing the work</h2>
+      <p>A sample of the faculty teaching this year's incoming cohort.</p>
+    </div>
+    <div class="faculty-grid">
+      <div class="faculty-card">
+        <div class="faculty-photo"><svg viewBox="0 0 200 200"><rect width="200" height="200" fill="#122A50"/><circle cx="100" cy="80" r="42" fill="#0F8B8D" opacity="0.7"/><rect x="30" y="140" width="140" height="70" rx="30" fill="#0F8B8D" opacity="0.5"/></svg></div>
+        <h3>Dr. Elena Marsh</h3>
+        <div class="role">Chair, Computer Science</div>
+        <p>Former research lead at a national robotics lab; teaches distributed systems.</p>
+      </div>
+      <div class="faculty-card">
+        <div class="faculty-photo"><svg viewBox="0 0 200 200"><rect width="200" height="200" fill="#0F8B8D" opacity="0.15"/><circle cx="100" cy="80" r="42" fill="#0B1D3A"/><rect x="30" y="140" width="140" height="70" rx="30" fill="#0B1D3A" opacity="0.7"/></svg></div>
+        <h3>Prof. Raymond Achu</h3>
+        <div class="role">Director, MBA Program</div>
+        <p>Twenty years in corporate strategy consulting before joining full-time faculty.</p>
+      </div>
+      <div class="faculty-card">
+        <div class="faculty-photo"><svg viewBox="0 0 200 200"><rect width="200" height="200" fill="#122A50"/><circle cx="100" cy="80" r="42" fill="#14B8A6" opacity="0.6"/><rect x="30" y="140" width="140" height="70" rx="30" fill="#14B8A6" opacity="0.4"/></svg></div>
+        <h3>Dr. Priya Nandan</h3>
+        <div class="role">Head, Environmental Science</div>
+        <p>Leads the coastal-resilience field station used by second-year students.</p>
+      </div>
+      <div class="faculty-card">
+        <div class="faculty-photo"><svg viewBox="0 0 200 200"><rect width="200" height="200" fill="#0F8B8D" opacity="0.15"/><circle cx="100" cy="80" r="42" fill="#0B1D3A"/><rect x="30" y="140" width="140" height="70" rx="30" fill="#0B1D3A" opacity="0.7"/></svg></div>
+        <h3>Prof. Jonas Reyes</h3>
+        <div class="role">Studio Lead, UX Design</div>
+        <p>Practicing product designer; runs the industry-sponsored capstone studio.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ACHIEVEMENTS ================= -->
+<section class="achieve">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow-plain">Track Record</div>
+      <h2>Thirty years, measured in outcomes</h2>
+    </div>
+    <div class="achieve-grid">
+      <div class="achieve-item">
+        <div class="counter"><span class="count-num" data-target="30">0</span><span class="suffix">+</span></div>
+        <div class="label">Years of teaching</div>
+      </div>
+      <div class="achieve-item">
+        <div class="counter"><span class="count-num" data-target="24000">0</span><span class="suffix">+</span></div>
+        <div class="label">Alumni worldwide</div>
+      </div>
+      <div class="achieve-item">
+        <div class="counter"><span class="count-num" data-target="92">0</span><span class="suffix">%</span></div>
+        <div class="label">Six-month placement rate</div>
+      </div>
+      <div class="achieve-item">
+        <div class="counter"><span class="count-num" data-target="140">0</span><span class="suffix">+</span></div>
+        <div class="label">Industry partners</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= TESTIMONIALS ================= -->
+<section class="testimonials">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow-plain">Alumni Voices</div>
+      <h2>What graduates say about their time here</h2>
+    </div>
+    <div class="testi-grid">
+      <div class="testi-card">
+        <p class="testi-quote">"The capstone project put me in front of a hiring manager before I'd even finished my thesis. That connection turned into my first job offer."</p>
+        <div class="testi-who">
+          <div class="testi-avatar"></div>
+          <div><div class="testi-name">Amara Chen</div><div class="testi-role">B.Sc. Computer Science, 2024</div></div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <p class="testi-quote">"Every professor in the MBA program had run something real. The case discussions felt like sitting in on actual board meetings."</p>
+        <div class="testi-who">
+          <div class="testi-avatar"></div>
+          <div><div class="testi-name">David Okonkwo</div><div class="testi-role">MBA, 2023</div></div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <p class="testi-quote">"I started research in my sophomore year, which most schools don't allow until graduate study. That head start shaped my entire career."</p>
+        <div class="testi-who">
+          <div class="testi-avatar"></div>
+          <div><div class="testi-name">Sofia Marín</div><div class="testi-role">M.Sc. Environmental Science, 2022</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= EVENTS ================= -->
+<section id="events" class="events">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow-plain">What's On</div>
+      <h2>Upcoming events on campus</h2>
+    </div>
+    <div class="event-row">
+      <div class="event-date"><span class="d">14</span><span class="m">OCT</span></div>
+      <div class="event-info"><h3>Fall Open House</h3><p>Campus tours, faculty Q&amp;A and a financial-aid workshop for prospective students.</p></div>
+      <div class="event-tag">Admissions</div>
+    </div>
+    <div class="event-row">
+      <div class="event-date"><span class="d">02</span><span class="m">NOV</span></div>
+      <div class="event-info"><h3>Industry Capstone Showcase</h3><p>Fourth-year students present their sponsored projects to partner companies.</p></div>
+      <div class="event-tag">Programs</div>
+    </div>
+    <div class="event-row">
+      <div class="event-date"><span class="d">19</span><span class="m">NOV</span></div>
+      <div class="event-info"><h3>Graduate Program Info Session</h3><p>An evening session covering the MBA, M.Sc. Data Science and M.Sc. Environmental Science tracks.</p></div>
+      <div class="event-tag">Admissions</div>
+    </div>
+    <div class="event-row">
+      <div class="event-date"><span class="d">05</span><span class="m">DEC</span></div>
+      <div class="event-info"><h3>Winter Research Symposium</h3><p>Undergraduate researchers present findings from this semester's funded projects.</p></div>
+      <div class="event-tag">Research</div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FAQ ================= -->
+<section id="faq" class="faq">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow-plain">Common Questions</div>
+      <h2>Admissions FAQ</h2>
+    </div>
+    <div id="faqList">
+      <div class="faq-item">
+        <button class="faq-q">What are the application deadlines?<span class="plus">+</span></button>
+        <div class="faq-a"><p>Early decision closes November 15; regular decision closes February 1. Graduate programs review applications on a rolling basis through April.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Is financial aid available?<span class="plus">+</span></button>
+        <div class="faq-a"><p>Yes. Roughly seventy percent of undergraduates receive need-based or merit aid, and every applicant is automatically considered — no separate scholarship application is required.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Do you accept transfer students?<span class="plus">+</span></button>
+        <div class="faq-a"><p>We accept transfer applications for fall and spring terms. Course credit is evaluated by the relevant department once an offer is made.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Can I visit campus before applying?<span class="plus">+</span></button>
+        <div class="faq-a"><p>Campus tours run weekdays year-round, and our Fall Open House on October 14 includes faculty office hours and a financial-aid workshop.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Are standardized test scores required?<span class="plus">+</span></button>
+        <div class="faq-a"><p>Test scores are optional for undergraduate admission. Select graduate programs, including the MBA, request scores as part of a complete application.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ADMISSION FORM ================= -->
+<section id="admission" class="admission">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow-plain" style="color:var(--teal-light);">Admissions</div>
+      <h2>Request more information</h2>
+      <p>Tell us a little about yourself and an admissions counselor will follow up within two business days.</p>
+    </div>
+    <div class="form-card">
+      <form id="enquiryForm" novalidate>
+        <div class="form-grid">
+          <div class="field" id="field-name">
+            <label for="fullName">Full name</label>
+            <input type="text" id="fullName" name="fullName" placeholder="Jordan Ellis">
+            <span class="err"></span>
+          </div>
+          <div class="field" id="field-email">
+            <label for="email">Email address</label>
+            <input type="email" id="email" name="email" placeholder="jordan@email.com">
+            <span class="err"></span>
+          </div>
+          <div class="field" id="field-phone">
+            <label for="phone">Phone number</label>
+            <input type="tel" id="phone" name="phone" placeholder="(555) 123-4567">
+            <span class="err"></span>
+          </div>
+          <div class="field" id="field-program">
+            <label for="program">Program of interest</label>
+            <select id="program" name="program">
+              <option value="">Select a program</option>
+              <option>Computer Science</option>
+              <option>Business Administration</option>
+              <option>User Experience Design</option>
+              <option>Molecular Biology</option>
+              <option>Data Science</option>
+              <option>Finance &amp; Accounting</option>
+              <option>Architecture</option>
+              <option>Environmental Science</option>
+              <option>Cybersecurity</option>
+            </select>
+            <span class="err"></span>
+          </div>
+          <div class="field full" id="field-message">
+            <label for="message">What would you like to know?</label>
+            <textarea id="message" name="message" rows="4" placeholder="Questions about scholarships, housing, transfer credit, etc."></textarea>
+            <span class="err"></span>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%; justify-content:center;">Submit Enquiry</button>
+        <p class="form-note">We'll never share your information. By submitting, you agree to be contacted by Meridian Institute admissions.</p>
+      </form>
+      <div class="form-success" id="formSuccess">
+        <h3>Thank you — your enquiry is in.</h3>
+        <p>A member of our admissions team will reach out to the email address you provided within two business days.</p>
+        <button class="btn btn-ghost" id="resetForm" style="margin-top:22px;">Submit another enquiry</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <a href="#top" class="brand"><span class="mark">M</span> Meridian Institute</a>
+        <p>An independent teaching institute offering undergraduate, graduate and continuing-education programs since 1994.</p>
+      </div>
+      <div>
+        <h4>Explore</h4>
+        <ul>
+          <li><a href="#about">About</a></li>
+          <li><a href="#programs">Programs</a></li>
+          <li><a href="#faculty">Faculty</a></li>
+          <li><a href="#events">Events</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Admissions</h4>
+        <ul>
+          <li><a href="#admission">Apply Now</a></li>
+          <li><a href="#faq">FAQ</a></li>
+          <li><a href="#">Financial Aid</a></li>
+          <li><a href="#">Campus Tours</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li>admissions@meridian.edu</li>
+          <li>(555) 010-2200</li>
+          <li>400 University Way<br>Ashford, ST 10245</li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Meridian Institute. All rights reserved.</span>
+      <span>Privacy Policy · Terms of Use</span>
+    </div>
+  </div>
+</footer>
+
+<button class="back-top" id="backTop" aria-label="Back to top">↑</button>
+
+<script>
+gsap.registerPlugin(ScrollTrigger);
+
+/* ---------- Mobile drawer ---------- */
+const hamburgerBtn = document.getElementById('hamburgerBtn');
+const drawer = document.getElementById('drawer');
+const drawerClose = document.getElementById('drawerClose');
+const scrim = document.getElementById('scrim');
+function openDrawer(){ drawer.classList.add('open'); scrim.classList.add('show'); }
+function closeDrawer(){ drawer.classList.remove('open'); scrim.classList.remove('show'); }
+hamburgerBtn.addEventListener('click', openDrawer);
+drawerClose.addEventListener('click', closeDrawer);
+scrim.addEventListener('click', closeDrawer);
+drawer.querySelectorAll('a').forEach(a => a.addEventListener('click', closeDrawer));
+
+/* ---------- Back to top ---------- */
+const backTop = document.getElementById('backTop');
+window.addEventListener('scroll', () => {
+  backTop.classList.toggle('show', window.scrollY > 500);
+});
+backTop.addEventListener('click', () => window.scrollTo({top:0, behavior:'smooth'}));
+
+/* ---------- Course filter tabs ---------- */
+const filterBar = document.getElementById('filterBar');
+const courseCards = document.querySelectorAll('.course-card');
+function applyFilter(filter){
+  courseCards.forEach(card => {
+    const match = filter === 'all' || card.dataset.cat === filter;
+    card.classList.toggle('show', match);
+    card.style.display = match ? 'block' : 'none';
+  });
+}
+filterBar.addEventListener('click', (e) => {
+  const btn = e.target.closest('.filter-tab');
+  if(!btn) return;
+  filterBar.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  applyFilter(btn.dataset.filter);
+  gsap.fromTo('.course-card.show', {opacity:0, y:16}, {opacity:1, y:0, duration:.4, stagger:.05, ease:'power2.out'});
+});
+applyFilter('all');
+
+/* ---------- FAQ accordion ---------- */
+document.querySelectorAll('.faq-item').forEach(item => {
+  const q = item.querySelector('.faq-q');
+  const a = item.querySelector('.faq-a');
+  q.addEventListener('click', () => {
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i => {
+      i.classList.remove('open');
+      i.querySelector('.faq-a').style.maxHeight = null;
+    });
+    if(!isOpen){
+      item.classList.add('open');
+      a.style.maxHeight = a.scrollHeight + 'px';
+    }
+  });
+});
+
+/* ---------- Animated counters ---------- */
+document.querySelectorAll('.count-num').forEach(el => {
+  const target = parseInt(el.dataset.target, 10);
+  ScrollTrigger.create({
+    trigger: el,
+    start: 'top 85%',
+    once: true,
+    onEnter: () => {
+      const obj = {val:0};
+      gsap.to(obj, {
+        val: target,
+        duration: 1.8,
+        ease: 'power2.out',
+        onUpdate: () => { el.textContent = Math.floor(obj.val).toLocaleString(); }
+      });
+    }
+  });
+});
+
+/* ---------- Form validation ---------- */
+const form = document.getElementById('enquiryForm');
+const formSuccess = document.getElementById('formSuccess');
+const resetBtn = document.getElementById('resetForm');
+
+function setError(fieldId, message){
+  const field = document.getElementById(fieldId);
+  field.classList.toggle('invalid', !!message);
+  field.querySelector('.err').textContent = message || '';
+}
+
+function validate(){
+  let valid = true;
+  const name = document.getElementById('fullName').value.trim();
+  const email = document.getElementById('email').value.trim();
+  const phone = document.getElementById('phone').value.trim();
+  const program = document.getElementById('program').value;
+  const message = document.getElementById('message').value.trim();
+
+  if(name.length < 2){ setError('field-name','Please enter your full name.'); valid = false; }
+  else setError('field-name','');
+
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if(!emailPattern.test(email)){ setError('field-email','Enter a valid email address.'); valid = false; }
+  else setError('field-email','');
+
+  const phonePattern = /^[0-9()+\-\s]{7,}$/;
+  if(!phonePattern.test(phone)){ setError('field-phone','Enter a valid phone number.'); valid = false; }
+  else setError('field-phone','');
+
+  if(!program){ setError('field-program','Please select a program.'); valid = false; }
+  else setError('field-program','');
+
+  if(message.length < 10){ setError('field-message','Tell us a bit more (10+ characters).'); valid = false; }
+  else setError('field-message','');
+
+  return valid;
+}
+
+form.addEventListener('submit', (e) => {
+  e.preventDefault();
+  if(validate()){
+    form.style.display = 'none';
+    formSuccess.classList.add('show');
+  }
+});
+
+resetBtn.addEventListener('click', () => {
+  form.reset();
+  document.querySelectorAll('.field').forEach(f => { f.classList.remove('invalid'); f.querySelector('.err').textContent=''; });
+  formSuccess.classList.remove('show');
+  form.style.display = 'block';
+});
+
+/* ---------- GSAP entrance + scroll reveals ---------- */
+window.addEventListener('DOMContentLoaded', () => {
+  const heroTl = gsap.timeline({defaults:{ease:'power3.out'}});
+  heroTl
+    .from('.hero-kicker', {opacity:0, y:16, duration:.6})
+    .from('.hero h1', {opacity:0, y:24, duration:.8}, '-=.35')
+    .from('.hero p.lead', {opacity:0, y:20, duration:.7}, '-=.5')
+    .from('.hero-ctas', {opacity:0, y:16, duration:.6}, '-=.45')
+    .from('.hero-side', {opacity:0, x:20, duration:.7}, '-=.6')
+    .from('.stat', {opacity:0, y:20, duration:.5, stagger:.1}, '-=.3');
+
+  const revealSelectors = [
+    '.section-head', '.about-media', '.about-copy > *',
+    '.course-card', '.why-item', '.faculty-card',
+    '.achieve-item', '.testi-card', '.event-row', '.faq-item'
+  ];
+  revealSelectors.forEach(sel => {
+    gsap.utils.toArray(sel).forEach((el) => {
+      gsap.from(el, {
+        opacity:0, y:28, duration:.7, ease:'power2.out',
+        scrollTrigger:{ trigger:el, start:'top 88%', toggleActions:'play none none none' }
+      });
+    });
+  });
+
+  gsap.utils.toArray('.course-grid, .why-grid, .faculty-grid').forEach(grid => {
+    ScrollTrigger.batch(grid.children, {
+      start:'top 90%',
+      onEnter: batch => gsap.to(batch, {opacity:1, stagger:.08, duration:.5})
+    });
+  });
+});
+</script>
+</body>
+</html>
