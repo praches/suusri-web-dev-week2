@@ -1,0 +1,126 @@
+.trainers__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-4);
+}
+
+.trainer-card {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  transition: transform var(--dur-med) var(--ease-out), border-color var(--dur-med) var(--ease-out), box-shadow var(--dur-med) var(--ease-out);
+}
+
+.trainer-card:hover {
+  transform: translateY(-6px);
+  border-color: var(--color-primary);
+  box-shadow: 0 16px 40px rgba(0,0,0,0.5);
+}
+
+.trainer-card__img-wrap {
+  position: relative;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+}
+
+.trainer-card__img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--dur-slow) var(--ease-out);
+  filter: grayscale(20%);
+}
+
+.trainer-card:hover .trainer-card__img-wrap img {
+  transform: scale(1.08);
+  filter: grayscale(0%);
+}
+
+.trainer-card__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 50%, rgba(10,10,10,0.95) 100%);
+}
+
+.trainer-card__socials {
+  position: absolute;
+  bottom: var(--space-3);
+  left: 50%;
+  transform: translateX(-50%) translateY(10px);
+  display: flex;
+  gap: var(--space-2);
+  opacity: 0;
+  transition: opacity var(--dur-med) var(--ease-out), transform var(--dur-med) var(--ease-out);
+}
+
+.trainer-card:hover .trainer-card__socials {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+.trainer-card__social {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(10,10,10,0.8);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--color-border-bright);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--color-text);
+  transition: background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
+}
+
+.trainer-card__social:hover {
+  background: var(--color-primary);
+  color: #fff;
+}
+
+.trainer-card__body { padding: var(--space-3); }
+
+.trainer-card__name {
+  font-size: 1.2rem;
+  margin-bottom: 2px;
+}
+
+.trainer-card__role {
+  font-size: 0.85rem;
+  color: var(--color-primary);
+  font-weight: 600;
+  margin-bottom: var(--space-2);
+}
+
+.trainer-card__meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: var(--space-2);
+  border-top: 1px solid var(--color-border);
+}
+
+.trainer-card__specialty {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+}
+
+.trainer-card__exp {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--color-text);
+  padding: 2px 10px;
+  border-radius: var(--radius-full);
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-border);
+}
+
+@media (max-width: 1024px) {
+  .trainers__grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 600px) {
+  .trainers__grid { grid-template-columns: 1fr; }
+}

@@ -1,0 +1,73 @@
+.facilities__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-4);
+}
+
+.facility-card {
+  padding: var(--space-5);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  transition: transform var(--dur-med) var(--ease-out), border-color var(--dur-med) var(--ease-out), background var(--dur-med) var(--ease-out);
+  position: relative;
+  overflow: hidden;
+}
+
+.facility-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--color-primary), transparent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--dur-med) var(--ease-out);
+}
+
+.facility-card:hover {
+  transform: translateY(-6px);
+  border-color: var(--color-primary);
+  background: var(--color-surface-hover);
+}
+
+.facility-card:hover::before { transform: scaleX(1); }
+
+.facility-card__icon {
+  width: 56px;
+  height: 56px;
+  border-radius: var(--radius-md);
+  background: rgba(255, 90, 31, 0.1);
+  border: 1px solid rgba(255, 90, 31, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-primary);
+  margin-bottom: var(--space-3);
+  transition: transform var(--dur-med) var(--ease-spring);
+}
+
+.facility-card:hover .facility-card__icon {
+  transform: scale(1.1) rotate(-5deg);
+}
+
+.facility-card__name {
+  font-size: 1.25rem;
+  margin-bottom: var(--space-2);
+}
+
+.facility-card__desc {
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+@media (max-width: 860px) {
+  .facilities__grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 600px) {
+  .facilities__grid { grid-template-columns: 1fr; }
+}
