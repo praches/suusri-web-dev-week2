@@ -1,0 +1,54 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-cream-50 text-slate-900 font-sans antialiased;
+  }
+  h1, h2, h3, h4, h5 {
+    @apply font-serif;
+  }
+}
+
+@layer components {
+  .container-luxury {
+    @apply max-w-7xl mx-auto px-6 lg:px-8;
+  }
+  .btn-gold {
+    @apply inline-flex items-center justify-center gap-2 px-8 py-3.5 bg-champagne-500 text-white font-sans font-medium text-sm tracking-wider uppercase rounded-sm transition-all duration-300 hover:bg-champagne-600 hover:shadow-lg;
+  }
+  .btn-outline {
+    @apply inline-flex items-center justify-center gap-2 px-8 py-3.5 border border-slate-300 text-slate-700 font-sans font-medium text-sm tracking-wider uppercase rounded-sm transition-all duration-300 hover:border-champagne-500 hover:text-champagne-600;
+  }
+  .section-label {
+    @apply inline-block text-champagne-600 font-sans text-sm font-medium tracking-[0.2em] uppercase mb-3;
+  }
+  .section-title {
+    @apply font-serif text-4xl md:text-5xl text-slate-900 font-light leading-tight;
+  }
+  .card-elevation {
+    @apply transition-all duration-500 ease-out;
+  }
+  .card-elevation:hover {
+    @apply shadow-2xl -translate-y-1;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
