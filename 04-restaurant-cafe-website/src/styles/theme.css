@@ -1,0 +1,179 @@
+:root {
+  /* Color system — rich dark moody + warm amber/gold */
+  --color-bg: #0c0a08;
+  --color-bg-elevated: #161210;
+  --color-surface: #1c1814;
+  --color-surface-hover: #241e18;
+  --color-border: #2a241e;
+  --color-border-bright: #3a3026;
+
+  --color-text: #f5efe6;
+  --color-text-muted: #a89a88;
+  --color-text-dim: #6b5f50;
+
+  --color-primary: #d4a24c;
+  --color-primary-bright: #e8b85e;
+  --color-primary-dim: #a87d36;
+  --color-primary-glow: rgba(212, 162, 76, 0.3);
+
+  --color-secondary: #c45d3b;
+  --color-accent: #e8b85e;
+  --color-success: #7cb069;
+  --color-warning: #e8b85e;
+  --color-error: #c45d3b;
+
+  /* Typography */
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  /* Spacing — 8px system */
+  --space-1: 0.5rem;
+  --space-2: 1rem;
+  --space-3: 1.5rem;
+  --space-4: 2rem;
+  --space-5: 2.5rem;
+  --space-6: 3rem;
+  --space-8: 4rem;
+  --space-10: 5rem;
+  --space-12: 6rem;
+
+  /* Layout */
+  --max-width: 1280px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-full: 9999px;
+
+  /* Transitions */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --dur-fast: 200ms;
+  --dur-med: 400ms;
+  --dur-slow: 700ms;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--color-bg);
+  color: var(--color-text);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+a { color: inherit; text-decoration: none; }
+img { display: block; max-width: 100%; }
+button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+input, select, textarea { font-family: inherit; font-size: 1rem; }
+
+::selection { background: var(--color-primary); color: #1a1410; }
+
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--color-bg); }
+::-webkit-scrollbar-thumb { background: var(--color-border-bright); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--color-primary); }
+
+/* Utility */
+.container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 var(--space-4);
+}
+
+.section { padding: var(--space-12) 0; position: relative; }
+
+.section-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--color-primary);
+  margin-bottom: var(--space-3);
+}
+
+.section-eyebrow::before {
+  content: '';
+  display: inline-block;
+  width: 32px;
+  height: 1px;
+  background: var(--color-primary);
+}
+
+.section-title {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  margin-bottom: var(--space-3);
+}
+
+.section-subtitle {
+  font-size: 1.1rem;
+  color: var(--color-text-muted);
+  max-width: 600px;
+  margin-bottom: var(--space-6);
+  line-height: 1.7;
+}
+
+.section-header { margin-bottom: var(--space-8); }
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1);
+  padding: 0.85rem 1.75rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  border-radius: var(--radius-sm);
+  transition: all var(--dur-med) var(--ease-out);
+  white-space: nowrap;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-primary {
+  background: var(--color-primary);
+  color: #1a1410;
+  font-weight: 700;
+}
+
+.btn-primary:hover {
+  background: var(--color-primary-bright);
+  box-shadow: 0 8px 30px var(--color-primary-glow);
+  transform: translateY(-2px);
+}
+
+.btn-outline {
+  border: 1px solid var(--color-border-bright);
+  color: var(--color-text);
+}
+
+.btn-outline:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  transform: translateY(-2px);
+}
+
+/* GSAP reveal helpers */
+.reveal { opacity: 0; transform: translateY(40px); }
+
+@media (max-width: 768px) {
+  .section { padding: var(--space-8) 0; }
+  .container { padding: 0 var(--space-3); }
+}

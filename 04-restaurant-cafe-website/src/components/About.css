@@ -1,0 +1,102 @@
+.about__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-8);
+  align-items: center;
+}
+
+.about__visual { position: relative; }
+
+.about__img-wrap {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  aspect-ratio: 4 / 5;
+  position: relative;
+}
+
+.about__img-parallax {
+  width: 100%;
+  height: 115%;
+  object-fit: cover;
+  will-change: transform;
+}
+
+.about__img-badge {
+  position: absolute;
+  bottom: -20px;
+  right: -20px;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  color: #1a1410;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-weight: 700;
+  box-shadow: 0 12px 40px var(--color-primary-glow);
+}
+
+.about__img-badge-num {
+  font-family: var(--font-display);
+  font-size: 2.5rem;
+  line-height: 1;
+}
+
+.about__img-badge-text {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-top: 2px;
+}
+
+.about__text {
+  color: var(--color-text-muted);
+  font-size: 1.05rem;
+  margin-bottom: var(--space-5);
+  line-height: 1.8;
+}
+
+.about__principles {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.about__principle {
+  display: flex;
+  gap: var(--space-3);
+  padding-bottom: var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.about__principle:last-child { border-bottom: none; }
+
+.about__principle-num {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  color: var(--color-primary);
+  line-height: 1;
+  flex-shrink: 0;
+  width: 48px;
+}
+
+.about__principle-title {
+  font-size: 1.2rem;
+  margin-bottom: var(--space-1);
+}
+
+.about__principle-text {
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+@media (max-width: 860px) {
+  .about__grid { grid-template-columns: 1fr; }
+  .about__visual { max-width: 400px; margin: 0 auto; }
+  .about__img-badge { width: 90px; height: 90px; bottom: -10px; right: -10px; }
+  .about__img-badge-num { font-size: 1.8rem; }
+}
