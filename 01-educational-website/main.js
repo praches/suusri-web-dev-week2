@@ -463,6 +463,24 @@ app.innerHTML = `
     </div>
   </section>
 
+  <!-- ================= CONTACT ================= -->
+    <section class="section" id="contact">
+      <div class="container">
+        <div class="section-head center reveal">
+          <span class="eyebrow">Get In Touch</span>
+          <h2 class="section-title">Contact Us</h2>
+        </div>
+
+        <form id="contactForm">
+          <input type="text" id="name" placeholder="Your Name" required />
+          <input type="email" id="email" placeholder="Your Email" required />
+          <input type="tel" id="phone" placeholder="Your Phone Number" />
+          <textarea id="message" placeholder="Your Message" required></textarea>
+          <button type="submit" class="btn btn-primary">Send Message</button>
+        </form>
+      </div>
+    </section>
+
   <!-- ============ FOOTER ============ -->
   <footer class="site-footer">
     <div class="container">
@@ -724,3 +742,39 @@ form.querySelectorAll('input, select, textarea').forEach((input) => {
 document.getElementById('backToTop').addEventListener('click', () => {
   window.scrollTo({ top: 0, behavior: 'smooth' })
 })
+
+// Contact Form Submission Handler
+const contactForm = document.querySelector("#contactForm");
+
+if (contactForm) {
+  contactForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const formData = {
+      name: document.querySelector("#name").value,
+      email: document.querySelector("#email").value,
+      phone: document.querySelector("#phone") ? document.querySelector("#phone").value : "",
+      message: document.querySelector("#message").value,
+    };
+
+    try {
+      const response = await fetch("http://localhost:5000/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        alert("✅ " + result.message);
+        contactForm.reset();
+      } else {
+        alert("❌ " + result.message);
+      }
+    } catch (err) {
+      console.error(err);
+      alert("❌ Connection error.");
+    }
+  });
+}

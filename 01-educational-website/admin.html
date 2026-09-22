@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Dashboard — Enquiries</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; background: #f4f6f8; }
+    .controls { display: flex; gap: 10px; margin-bottom: 20px; }
+    input, select { padding: 8px; font-size: 14px; }
+    table { width: 100%; border-collapse: collapse; background: #fff; }
+    th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+    th { background: #1a365d; color: white; }
+    .btn-delete { background: #e53e3e; color: white; border: none; padding: 6px 12px; cursor: pointer; border-radius: 4px; }
+  </style>
+</head>
+<body>
+  <h2>Admin Enquiry Dashboard</h2>
+  <div class="controls">
+    <input type="text" id="searchInput" placeholder="Search enquiries..." oninput="loadEnquiries()">
+    <select id="statusFilter" onchange="loadEnquiries()">
+      <option value="All">All Statuses</option>
+      <option value="Pending">Pending</option>
+      <option value="In Progress">In Progress</option>
+      <option value="Resolved">Resolved</option>
+    </select>
+  </div>
+  <table>
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>Message</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody id="enquiryTable"></tbody>
+  </table>
+
+  <script>
+    const API_URL = "http://localhost:5000/api/enquiries";
+
+    async function loadEnquiries() {
+      const search = document.getElementById("searchInput").value;
+      const status = document.getElementById("statusFilter").value;
+      const res = await fetch(`${API_URL}?search=${encodeURIComponent(search)}&status=${encodeURIComponent(status)}`);
+      const { data } = await res.json();
+
+      document.getElementById("enquiryTable").innerHTML = data.map(item => `
+        <tr>
+          <td>${new Date(item.createdAt).toLocaleDateString()}</td>
+          <td>${item.name}</td>
+          <td>${item.email}</td>
+          <td>${item.phone}</td>
+          <td>${item.message}</td>
+          <td>
+            <select onchange="updateStatus('${item.id}', this.value)">
+              <option value="Pending" ${item.status === 'Pending' ? 'selected' : ''}>Pending</option>
+              <option value="In Progress" ${item.status === 'In Progress' ? 'selected' : ''}>In Progress</option>
+              <option value="Resolved" ${item.status === 'Resolved' ? 'selected' : ''}>Resolved</option>
+            </select>
+          </td>
+          <td><button class="btn-delete" onclick="deleteEnquiry('${item.id}')">Delete</button></td>
+        </tr>
+      `).join('');
+    }
+
+    async function updateStatus(id, status) {
+      await fetch(`${API_URL}/${id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ status })
+      });
+      loadEnquiries();
+    }
+
+    async function deleteEnquiry(id) {
+      if (confirm("Delete this item?")) {
+        await fetch(`${API_URL}/${id}`, { method: "DELETE" });
+        loadEnquiries();
+      }
+    }
+
+    loadEnquiries();
+  </script>
+</body>
+</html>
